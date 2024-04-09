@@ -253,6 +253,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: dev
+EOF
 ```
 
 Run kustomize build to see a preview of the changes. 
@@ -266,7 +267,7 @@ Deploy the wordpress app (hydrate the kustomization file), check the resources h
 ```bash
 kubectl apply -k .
 
-kubectl get all
+kubectl get all -n dev
 
 kubectl delete -k .
 ```
@@ -278,19 +279,13 @@ Create a Prod folder under Overlays.
 mkdir ../prod
 ```
 
-Copy the kustomization file from the dev overlay to the prod overlay.
-```bash
-cp kustomization.yaml ../prod/
-```
-
-Open the kustomization file with vi.
-
+Create a Kustomization file in the prod overlay directory. 
 ```bash
 cd ../overlays/prod
 vi kustomization.yaml
 ```
 
-Replace the current contents with the following:
+Add the following contents to the file:
 ```bash
 namespace: prod
 
