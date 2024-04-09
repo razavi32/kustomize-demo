@@ -1,6 +1,6 @@
-# Kubernetes Kustomize Demo
+# Kubernetes Kustomize Tutorial
 
-This demo was created to help users learn some basic functionality of Kustomize.  To start, download the project to a working directory on [AWS Cloud9 Workspace](https://console.aws.amazon.com/cloud9/home/product?p=c9&cp=bn&ad=c):
+This tutorial was created to help users learn some basic functionality of Kustomize.  To start, download the project to a working directory on [AWS Cloud9 Workspace](https://console.aws.amazon.com/cloud9/home/product?p=c9&cp=bn&ad=c):
 
 ```bash
 git clone https://github.com/razavi32/kustomize-demo.git
@@ -14,9 +14,10 @@ Run kustomize build to see which resources will be created in each sub-directory
 ```bash
 cd kustomize-demo/base
 cd wordpress
-kubectl kustomize build .
+kubectl kustomize .
+
 cd mysql
-kubectl kustomize build .
+kubectl kustomize .
 cd ..
 ```
 
@@ -57,7 +58,7 @@ EOF
 Run kustomize build to see a preview of the changes:
 
 ```bash
-kubectl kustomize build .
+kubectl kustomize .
 ```
 
 ### Adding a transformer inline
@@ -69,7 +70,7 @@ rm name-suffix.yml
 Run kustomize build to see a preview of the changes.  The suffix should be gone. 
 
 ```bash
-kubectl kustomize build .
+kubectl kustomize .
 ```
 
 Open the kustomization file with vi.  Replace the transformer section that was added to the kustomization.yaml with the following:
@@ -88,7 +89,7 @@ transformers:
 Save the kustomization file with vi.  Run kustomize build to see a preview of the changes.  The suffix should be back again. 
 
 ```bash
-kubectl kustomize build .
+kubectl kustomize .
 ```
 
 ### Adding a transformer with convenience fields
@@ -101,7 +102,7 @@ nameSuffix: -convenience
 Save the kustomization file with vi.  Run kustomize build to see a preview of the changes.  The suffix should now be convenience. 
 
 ```bash
-kubectl kustomize build .
+kubectl kustomize .
 ```
 
 Deploy the wordpress app (hydrate the kustomization file), check the resources have been created and then delete them.
@@ -139,7 +140,7 @@ secretGenerator:
 Save the kustomization file with vi.  Run kustomize build to see a preview of the changes.  There should be a secret generated first and notice the deployment references the right name for the secret. 
 
 ```bash
-kubectl kustomize build .
+kubectl kustomize .
 ```
 
 ## Patches
@@ -202,7 +203,7 @@ vars:
 Save the kustomization file with vi.  Run kustomize build to see a preview of the changes.  Confirm the variable substitution.  
 
 ```bash
-kubectl kustomize build .
+kubectl kustomize .
 ```
 
 Deploy the Wordpress Application and pull it up in a browser.  Once you're done reviewing the application, delete all the resources.  
@@ -266,7 +267,7 @@ metadata:
 Run kustomize build to see a preview of the changes. 
 
 ```bash
-kubectl kustomize build .
+kubectl kustomize .
 ```
 
 Deploy the wordpress app (hydrate the kustomization file), check the resources have been created and then delete them.
@@ -330,7 +331,7 @@ metadata:
 Run kustomize build to see a preview of the changes. 
 
 ```bash
-kubectl kustomize build .
+kubectl kustomize .
 ```
 
 Deploy the wordpress app (hydrate the kustomization file), check the resources have been created and then delete them.
