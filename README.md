@@ -41,6 +41,7 @@ metadata:
 suffix: -transformers
 fieldSpecs:
 - path: metadata/name
+EOF
 ```
 
 Create a kustomization file for the base directory.
@@ -67,26 +68,21 @@ Delete the name-suffix.yml.
 ```bash
 rm name-suffix.yml
 ```
-Run kustomize build to see a preview of the changes.  The suffix should be gone. 
-
-```bash
-kubectl kustomize .
-```
-
 Open the kustomization file with vi.  Replace the transformer section that was added to the kustomization.yaml with the following:
 ```bash
 transformers:
-- |-apiVersion: builtin
-    kind: PrefixSuffixTransformer
-    metadata:
-      name: my-suffix-transformer
-    #prefix: v1-
-    suffix: -transformers
-    fieldSpecs:
-    - path: metadata/name
+- |-
+  apiVersion: builtin
+  kind: PrefixSuffixTransformer
+  metadata:
+    name: my-suffix-transformer
+  #prefix: v1-
+  suffix: -transformers-inline
+  fieldSpecs:
+  - path: metadata/name
 ```
 
-Save the kustomization file with vi.  Run kustomize build to see a preview of the changes.  The suffix should be back again. 
+Save the kustomization file with vi.  Run kustomize build to see a preview of the changes.  The suffix should be back again but now with -inline tagged onto the enda s well. 
 
 ```bash
 kubectl kustomize .
@@ -130,7 +126,7 @@ password=admin
 EOF
 ```
 
-Open the kustomization file with vi.  Add the following to the top of the file:
+Open the kustomization file in the mysql directory with vi.  Add the following to the top of the file:
 ```bash
 secretGenerator:
   - name: mysql-pass
@@ -147,14 +143,13 @@ kubectl kustomize .
 
 Patches allow you to apply fine-grained changes to resources using JSON or YAML.
 
-### Create a patch.
+### Create a patch
 
 In this demo, we're going to create a patch that 1) adds an initial container to show the mysql service name and 2) adds an environment variable that allows wordpress to find the mysql database.
 
-Create a patch file with the following content:
+Create a file called patch.yaml with the following content. 
 
 ```bash
-cat <<EOF >./patch.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -177,7 +172,6 @@ spec:
             secretKeyRef:
               name: mysql-pass
               key: password
-EOF
 ```
 
 Open the kustomization file with vi.  Add the following:
