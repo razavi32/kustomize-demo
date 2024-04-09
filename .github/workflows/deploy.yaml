@@ -35,7 +35,7 @@ jobs:
     - name: Set up kubectl
       uses: azure/setup-kubectl@v3
       with:
-        version: '1.28'
+        version: 'latest'
 
     # Setup Kube Config to point to my EKS cluster
     - name: Setup Kube Config
