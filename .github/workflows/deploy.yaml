@@ -1,0 +1,53 @@
+name: Prepare Manifests and Deploy to AWS
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT }}
+  AWS_CLUSTER: eks-workshop
+  AWS_ZONE: us-west-2
+  ENVIRONMENT: default
+
+jobs:
+  setup-prepare-manifests-deploy:
+    name: Setup, Prepare, and Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Set up AWS CLI
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-west-2
+
+    # Download and setup latest kubectl version 
+    - name: Set up kubectl
+      uses: azure/setup-kubectl@v3
+      with:
+        version: '1.27'
+
+    # Setup Kube Config to point to my EKS cluster
+    - name: Setup Kube Config
+      run: |-
+        aws eks update-kubeconfig --name eks-workshop --region us-west-2
+
+    # Deploy to the AWS cluster
+    - name: Deploy to AWS
+      run: |-
+        kubectl kustomize base/wordpress/ > deploy.yml
+        echo "Kustomize output:"
+        cat deploy.yml
+        
+        kubectl apply -f deploy.yml
+        kubectl get services -n $ENVIRONMENT -o wide
