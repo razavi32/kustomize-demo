@@ -174,7 +174,7 @@ spec:
               key: password
 ```
 
-Open the kustomization file with vi.  Add the following:
+In addition to the patch, we also need to bind variables to K8s object fields.  This can be done with variable substitution.  In other words, regardless of the actual service names, the wordpress application will be able to find the mysql service.  Open the kustomization file with vi.  Add the following:
 ```bash
 patches:
 - path: patch.yaml
@@ -204,7 +204,7 @@ Deploy the Wordpress Application and pull it up in a browser.  Once you're done 
 ```bash
 kubectl apply -k .
 
-kubectl get all # Grab the ALB from the response and paste it into a browser. 
+kubectl get all | grep LoadBalancer # Grab the ALB from the response and paste it into a browser. 
 
 kubectl delete -k .
 ```
@@ -218,26 +218,23 @@ Save the kustomization file with vi.
 
 ## Multiple Environments w/ Overlays
 
+Kustomize can be used to deploy manifests to different environments like dev, test and production by leveraging overlays.  Our base manifests (base directory) represent our application with a common configuration that is shared across all environemnts.  In this section, we'll create separate overlay directories for a dev and prod environment and then customize the base manifests with environment-specific configurations or settings.
+
 ### Create an Overlays folder
 
 ```bash
+mkdir ../overlays
 mkdir ../overlays/dev
 ```
 ### Setup the Dev Overlay
 
-Copy the kustomization file from the base directory to the dev overlay.
-```bash
-cp kustomization.yaml ../overlays/dev
-```
-
-Open the kustomization file with vi.
-
+Create a Kustomization file in the dev overlay directory. 
 ```bash
 cd ../overlays/dev
 vi kustomization.yaml
 ```
 
-Replace the current contents with the following:
+Add the following contents to the file:
 ```bash
 namespace: dev
 
