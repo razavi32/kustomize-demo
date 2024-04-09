@@ -147,7 +147,7 @@ Patches allow you to apply fine-grained changes to resources using JSON or YAML.
 
 In this demo, we're going to create a patch that 1) adds an initial container to show the mysql service name and 2) adds an environment variable that allows wordpress to find the mysql database.
 
-Create a file called patch.yaml with the following content. 
+Create a file called patch.yaml in the base directory with the following content. 
 
 ```bash
 apiVersion: apps/v1
