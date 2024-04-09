@@ -218,7 +218,7 @@ Save the kustomization file with vi.
 
 ## Multiple Environments w/ Overlays
 
-Kustomize can be used to deploy manifests to different environments like dev, test and production by leveraging overlays.  Our base manifests (base directory) represent our application with a common configuration that is shared across all environemnts.  In this section, we'll create separate overlay directories for a dev and prod environment and then customize the base manifests with environment-specific configurations or settings.
+Kustomize can be used to deploy manifests to different environments like dev, test and production by leveraging overlays.  Our base manifests (base directory) represent our application with a common configuration that is shared across all environments.  In this section, we'll create separate overlay directories for a dev and prod environment and then customize the base manifests with environment-specific configurations or settings.
 
 ### Create an Overlays folder
 
