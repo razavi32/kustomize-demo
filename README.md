@@ -297,7 +297,7 @@ nameSuffix: -prod
 
 labels:
 - pairs:
-  env: prod
+    env: prod
 
 replicas:
 - name: wordpress
@@ -312,6 +312,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: prod
+EOF
 ```
 
 Run kustomize build to see a preview of the changes. 
@@ -325,12 +326,13 @@ Deploy the wordpress app (hydrate the kustomization file), check the resources h
 ```bash
 kubectl apply -k .
 
-kubectl get all
-
-kubectl delete -k .
+kubectl get all -n prod | grep LoadBalancer # Grab the ALB from the response and paste it into a browser. 
 ```
 
-
+Delete the resources.
+```bash
+kubectl delete -k .
+```
 
 ## [Launching an EKS Cluster - Lab 1](./1-launching-eks-cluster)
 
