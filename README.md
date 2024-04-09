@@ -281,7 +281,7 @@ mkdir ../prod
 
 Create a Kustomization file in the prod overlay directory. 
 ```bash
-cd ../overlays/prod
+cd ../prod
 vi kustomization.yaml
 ```
 
