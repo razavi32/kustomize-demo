@@ -72,13 +72,7 @@ Run kustomize build to see a preview of the changes.  The suffix should be gone.
 kubectl kustomize build .
 ```
 
-Open the kustomization file with vi.
-
-```bash
-vi kustomization.yaml
-```
-
-Replace the transformer section that was added to the kustomization.yaml with the following:
+Open the kustomization file with vi.  Replace the transformer section that was added to the kustomization.yaml with the following:
 ```bash
 transformers:
 - |-apiVersion: builtin
@@ -91,14 +85,7 @@ transformers:
     - path: metadata/name
 ```
 
-Save the kustomization file with vi.
-
-```bash
-Esc
-:wq!
-```
-
-Run kustomize build to see a preview of the changes.  The suffix should be back again. 
+Save the kustomization file with vi.  Run kustomize build to see a preview of the changes.  The suffix should be back again. 
 
 ```bash
 kubectl kustomize build .
@@ -106,25 +93,12 @@ kubectl kustomize build .
 
 ### Adding a transformer with convenience fields
 
-Open the kustomization file with vi.
-
-```bash
-vi kustomization.yaml
-```
-
-Replace the transformer section that was added to the kustomization.yaml with the following:
+Open the kustomization file with vi.  Replace the transformer section that was added to the kustomization.yaml with the following:
 ```bash
 nameSuffix: -convenience
 ```
 
-Save the kustomization file with vi.
-
-```bash
-Esc
-:wq!
-```
-
-Run kustomize build to see a preview of the changes.  The suffix should now be convenience. 
+Save the kustomization file with vi.  Run kustomize build to see a preview of the changes.  The suffix should now be convenience. 
 
 ```bash
 kubectl kustomize build .
@@ -134,8 +108,38 @@ Deploy the wordpress app (hydrate the kustomization file), check the resources h
 
 ```bash
 kubectl apply -k .
+
 kubectl get all
+
 kubectl delete -k .
+```
+
+## Generators
+
+Generators dynamically generate Kubernetes resources (ConfigMaps and Secrets) based on configurations at the time of applying your Kustomize manifests.
+
+In this demo, we're going to add a Secrets Generator to our Kustomization yaml in the mysql directory.  This generator is going to be the root password to our mysql database.  As with transformers, there are multiple methods for adding a Generator.  In this example, we're going to use environment variables.  
+
+Create a properties file with a password key/value pair.  
+```bash
+cd mysql
+
+cat <<EOF >./mysql-secret.properties
+password=admin
+EOF
+```
+
+Open the kustomization file with vi.  Add the following to the top of the file:
+```bash
+secretGenerator:
+  - name: mysql-pass
+    envs:
+      - mysql-secret.properties
+```
+Save the kustomization file with vi.  Run kustomize build to see a preview of the changes.  There should be a secret generated first and notice the deployment references the right name for the secret. 
+
+```bash
+kubectl kustomize build .
 ```
 
 ## Patches
@@ -175,13 +179,7 @@ spec:
 EOF
 ```
 
-Open the kustomization file with vi.
-
-```bash
-vi kustomization.yaml
-```
-
-Add the following:
+Open the kustomization file with vi.  Add the following:
 ```bash
 patches:
 - path: patch.yaml
@@ -201,44 +199,28 @@ vars:
       apiVersion: v1
 ```
 
-Save the kustomization file with vi.
-
-```bash
-Esc
-:wq!
-```
-
-Run kustomize build to see a preview of the changes.  Confirm the variable substitution.  
+Save the kustomization file with vi.  Run kustomize build to see a preview of the changes.  Confirm the variable substitution.  
 
 ```bash
 kubectl kustomize build .
 ```
 
-Deploy the Wordpress Application and pull it up in a browser.
+Deploy the Wordpress Application and pull it up in a browser.  Once you're done reviewing the application, delete all the resources.  
 ```bash
 kubectl apply -k .
+
 kubectl get all # Grab the ALB from the response and paste it into a browser. 
+
 kubectl delete -k .
 ```
 
 ### Remove the nameSuffix from the kustomization.yaml.
-Open the kustomization file with vi.
-
-```bash
-vi kustomization.yaml
-```
-
-Remove the following:
+Open the kustomization file with vi.  Remove the following:
 ```bash
 nameSuffix: -convenience
 ```
-
 Save the kustomization file with vi.
 
-```bash
-Esc
-:wq!
-```
 ## Multiple Environments w/ Overlays
 
 ### Create an Overlays folder
@@ -271,14 +253,7 @@ resources:
 nameSuffix: -dev
 ```
 
-Save the kustomization file with vi.
-
-```bash
-Esc
-:wq!
-```
-
-Create the namespace.yml thats referenced above.
+Save the kustomization file with vi.  Create the namespace.yml thats referenced above.
 
 ```bash
 cat <<EOF >./namespace.yml
@@ -298,7 +273,9 @@ Deploy the wordpress app (hydrate the kustomization file), check the resources h
 
 ```bash
 kubectl apply -k .
+
 kubectl get all
+
 kubectl delete -k .
 ```
 
@@ -340,14 +317,7 @@ replicas:
   count: 3
 ```
 
-Save the kustomization file with vi.
-
-```bash
-Esc
-:wq!
-```
-
-Create the namespace.yml thats referenced above.
+Save the kustomization file with vi.  Create the namespace.yml thats referenced above.
 
 ```bash
 cat <<EOF >./namespace.yml
@@ -367,7 +337,9 @@ Deploy the wordpress app (hydrate the kustomization file), check the resources h
 
 ```bash
 kubectl apply -k .
+
 kubectl get all
+
 kubectl delete -k .
 ```
 
