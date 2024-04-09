@@ -321,7 +321,7 @@ Run kustomize build to see a preview of the changes.
 kubectl kustomize .
 ```
 
-Deploy the wordpress app (hydrate the kustomization file), check the resources have been created and then delete them.
+Deploy the wordpress app (hydrate the kustomization file), check the resources have been created and the app is up.
 
 ```bash
 kubectl apply -k .
