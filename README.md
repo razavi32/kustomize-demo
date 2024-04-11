@@ -246,6 +246,10 @@ resources:
 - "../../base"
 - namespace.yml
 
+images:
+- name: wordpress
+  newTag: 5.0-apache
+
 nameSuffix: -dev
 ```
 
