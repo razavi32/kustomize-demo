@@ -347,8 +347,3 @@ kubectl delete -k .
 ## Integrating Kustomize with CI/CD
 
 Kustomize can be effectively integrated into a CI/CD (Continuous Integration/Continuous Deployment) pipeline alongside your existing CI/CD tools and workflows. For example, you can use Kustomize to generate Kubernetes manifests as part of your pipeline, apply changes to your Kubernetes clusters using kubectl, and automate testing and validation steps to ensure smooth deployments.  In this tutorial, we're going to use a GitHub Actions workflow to demonstrate pushing code to a repo that kicks off an automated workflow.  The workflow will go through a series of steps which include deploying resources to a K8s cluster. 
-
-### 
-
-Once I go through the previous steps, I need to update the workflow and include that as part of the base repo.  
-I also will need to create another copy of the repo and used that during the L&L so I dont mess up the original. 
