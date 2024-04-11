@@ -10,6 +10,8 @@ The following tutorial assumes you have a running K8s cluster and a workspace wh
 git clone https://github.com/razavi32/kustomize-demo.git
 ```
 
+Kustomize comes with kubectl; however, it can be installed stand alone in order to take advantage of the latest features: [Install Kustomize](https://kubectl.docs.kubernetes.io/installation/kustomize/)
+
 ## Explore the Base Directory
 
 Explore the Base directory to understand the kubernetes objects that make up the base application for this demo.  There are two sub-directories, one for each tier of a WordPress application.  Drill into each of the sub-directories and see the components of each tier.  
