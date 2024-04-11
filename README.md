@@ -10,7 +10,7 @@ The following tutorial assumes you have a running K8s cluster and a workspace wh
 git clone https://github.com/razavi32/kustomize-demo.git
 ```
 
-Kustomize comes with kubectl; however, it can be installed stand alone in order to take advantage of the latest features: [Install Kustomize](https://kubectl.docs.kubernetes.io/installation/kustomize/)
+Kustomize comes with kubectl; however, it can be installed stand alone in order to take advantage of the latest features: [Install Kustomize](https://kubectl.docs.kubernetes.io/installation/kustomize/).
 
 ## Explore the Base Directory
 
